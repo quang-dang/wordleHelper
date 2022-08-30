@@ -1,9 +1,31 @@
-html, body {
+  html, body {
     background-color: #FAFAFA;
     min-width: 600px;
     font-size: 1.5 em;
   }
-  
+
+  td {
+    text-align: center;
+    vertical-align: middle;  
+    margin-left: 0.125em;
+    margin-right: 0.125em;
+  }
+
+  input[type=text]{
+    color: white;
+    padding: 0;
+    border: 0;
+    text-align: center;
+    width: 48px;
+    height: 48px;
+    font-size: 24px !important;
+    background-color: green;
+    font-weight: bold;
+    outline: none;
+    align-self: center; 
+    text-transform: capitalize;
+  }
+
   .footer{
     margin-right: auto;
     margin-left: auto;
@@ -22,5 +44,12 @@ html, body {
     background-color: rgba(0,0,0,0.5); /* Black background with opacity */
     z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
     cursor: wait;
+  }
+
+  .color-picker {
+    width: 0.8em;
+    height: 0.8em; 
+    margin: 0.125em; 
+    align-self: center;
   }
 

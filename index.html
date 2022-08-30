@@ -14,66 +14,66 @@
           </div>
         </div>
 
-        <div>
-            <div style="display: flex; flex-direction: row;" >
-                <div>
-                    <h5 style="text-align: center;">1st guess   </h5>
+        <div style="display: flex; flex-direction: column;">
+            <div style="display: flex; flex-direction: row; align-self: center;" >
+                <div style="margin-right: 1em;">
+                    <h5 style="text-align: center;">1st guess</h5>
                 </div>
-                <table id="guess-1-row">
-                    <tr style ="display: flex; flex-direction: row;">
-                        <td style="display: flex; flex-direction: column;">
-                            <input style="align-self: center;"  type="text" maxlength="1">
-                            <div>
-                                <select name="color" id="color">
-                                    <option style="color:green" value="green">green</option>
-                                    <option style="color:yellow" value="yellow">yellow</option>
-                                    <option style="color:gray" value="gray">gray</option>
-                                </select>
-                            </div>
-                        </td>
-                        <td style="display: flex; flex-direction: column;">
-                            <input style="align-self: center;" type="text" maxlength="1">
-                            <div>
-                                <select name="color" id="color">
-                                    <option style="color:green" value="green">green</option>
-                                    <option style="color:yellow" value="yellow">yellow</option>
-                                    <option style="color:gray" value="gray">gray</option>
-                                </select>
-                            </div>
-                        </td>
-                        <td style="display: flex; flex-direction: column;">
-                            <input style="align-self: center;" type="text" maxlength="1">
-                            <div>
-                                <select name="color" id="color">
-                                    <option style="color:green" value="green">green</option>
-                                    <option style="color:yellow" value="yellow">yellow</option>
-                                    <option style="color:gray" value="gray">gray</option>
-                                </select>
-                            </div>
-                        </td>
-                        <td style="display: flex; flex-direction: column;">
-                            <input style="align-self: center;" type="text" maxlength="1">
-                            <div>
-                                <select name="color" id="color">
-                                    <option style="color:green" value="green">green</option>
-                                    <option style="color:yellow" value="yellow">yellow</option>
-                                    <option style="color:gray" value="gray">gray</option>
-                                </select>
-                            </div>
-                        </td>
-                        <td style="align-self: center;" style="display: flex; flex-direction: column;">
-                            <input  type="text" maxlength="1">
-                            <div>
-                                <select name="color" id="color">
-                                    <option style="color:green" value="green">green</option>
-                                    <option style="color:yellow" value="yellow">yellow</option>
-                                    <option style="color:gray" value="gray">gray</option>
-                                </select>
-                            </div>
-                        </td>
-                      </tr>
-                </table>
-            </div>
+                <div style="display: flex; flex-direction: column;">
+                    <table id="guess-1-row">
+                        <tr style ="display: flex; flex-direction: row;">
+                            <td style="display: flex; flex-direction: column;">
+                                <input id="guess-1-input-1" type="text" maxlength="1" onkeypress='validateInputText(event)'>
+                                <div style="display: flex; flex-direction: row;">
+                                    <div id="guess-1-input-1-color-green" class="color-picker" style="background-color: green; border-style: solid; border-width: 0.1em; border-color: black;" 
+                                        onclick="changeInputColor('1','1','green')"></div>
+                                    <div id="guess-1-input-1-color-yellow" class="color-picker" style="background-color: yellow;" onclick="changeInputColor('1','1','yellow')"></div>
+                                    <div id="guess-1-input-1-color-gray" class="color-picker" style="background-color: gray;" onclick="changeInputColor('1','1','gray')"></div>
+                                </div>
+                            </td>
+                            <td style="display: flex; flex-direction: column;">
+                                <input id="guess-1-input-2" type="text" maxlength="1" onkeypress='validateInputText(event)'>
+                                <div style="display: flex; flex-direction: row;">
+                                    <div id="guess-1-input-2-color-green" class="color-picker" style="background-color: green; border-style: solid; border-width: 0.1em; border-color: black;" 
+                                        onclick="changeInputColor('1','2','green')"></div>
+                                    <div id="guess-1-input-2-color-yellow" class="color-picker" style="background-color: yellow;" onclick="changeInputColor('1','2','yellow')"></div>
+                                    <div id="guess-1-input-2-color-gray" class="color-picker" style="background-color: gray;" onclick="changeInputColor('1','2','gray')"></div>
+                                </div>
+                            </td>
+                            <td style="display: flex; flex-direction: column;">
+                                <input id="guess-1-input-3" type="text" maxlength="1" onkeypress='validateInputText(event)'>
+                                <div style="display: flex; flex-direction: row;">
+                                    <div id="guess-1-input-3-color-green" class="color-picker" style="background-color: green; border-style: solid; border-width: 0.1em; border-color: black;" 
+                                        onclick="changeInputColor('1','3','green')"></div>
+                                    <div id="guess-1-input-3-color-yellow" class="color-picker" style="background-color: yellow;" onclick="changeInputColor('1','3','yellow')"></div>
+                                    <div id="guess-1-input-3-color-gray" class="color-picker" style="background-color: gray;" onclick="changeInputColor('1','3','gray')"></div>
+                                </div>
+                            </td>
+                            <td style="display: flex; flex-direction: column;">
+                                <input id="guess-1-input-4" type="text" maxlength="1" onkeypress='validateInputText(event)'>
+                                <div style="display: flex; flex-direction: row;">
+                                    <div id="guess-1-input-4-color-green" class="color-picker" style="background-color: green; border-style: solid; border-width: 0.1em; border-color: black;" 
+                                        onclick="changeInputColor('1','4','green')"></div>
+                                    <div id="guess-1-input-4-color-yellow" class="color-picker" style="background-color: yellow;" onclick="changeInputColor('1','4','yellow')"></div>
+                                    <div id="guess-1-input-4-color-gray" class="color-picker" style="background-color: gray;" onclick="changeInputColor('1','4','gray')"></div>
+                                </div>
+                            </td>
+                            <td style="display: flex; flex-direction: column;">
+                                <input id="guess-1-input-5" type="text" maxlength="1" onkeypress='validateInputText(event)'>
+                                <div style="display: flex; flex-direction: row;">
+                                    <div id="guess-1-input-5-color-green" class="color-picker" style="background-color: green; border-style: solid; border-width: 0.1em; border-color: black;" 
+                                        onclick="changeInputColor('1','5','green')"></div>
+                                    <div id="guess-1-input-5-color-yellow" class="color-picker" style="background-color: yellow;" onclick="changeInputColor('1','5','yellow')"></div>
+                                    <div id="guess-1-input-5-color-gray" class="color-picker" style="background-color: gray;" onclick="changeInputColor('1','5','gray')"></div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <div style="align-self: center;">
+                        <button>Guess</button>
+                    </div>   
+                </div> 
+            </div>    
         </div>
 
         <div></div>

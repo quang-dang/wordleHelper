@@ -1,3 +1,6 @@
+import {Trie} from './trie.js';
+import {words1, words2} from './dictionary.js';
+
 function validateInputText(evt) {
     var theEvent = evt || window.event;
   
@@ -30,4 +33,13 @@ function changeInputColor(guessId, inputId, colorId) {
             element.style.borderStyle = "none";
         }
     });
+    let trie = new Trie();
+    words1.forEach((word) => trie.add(word));
+    words2.forEach((word) => trie.add(word));
+    const t = trie.findAllWords({},{0:"w"},{},"w");
+    console.log(t);
+
 }
+
+window.changeInputColor = changeInputColor;
+window.validateInputText = validateInputText;

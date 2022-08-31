@@ -38,8 +38,20 @@ function changeInputColor(guessId, inputId, colorId) {
     words2.forEach((word) => trie.add(word));
     const t = trie.findAllWords({},{0:"w"},{},"w");
     console.log(t);
+}
 
+function getInputs(guessId) {
+    let ans = [];
+    ['1','2','3','4','5'].forEach((id) => {
+        const inputId = "guess-".concat(guessId).concat("-input-").concat(id);
+        const inputElement = document.getElementById(inputId);
+        const inputColor = inputElement.style.backgroundColor;
+        const inputValue = inputElement.value;
+        ans.push(inputValue);
+    })
+    console.log(ans);
 }
 
 window.changeInputColor = changeInputColor;
 window.validateInputText = validateInputText;
+window.getInputs = getInputs;

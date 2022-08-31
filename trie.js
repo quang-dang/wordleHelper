@@ -1,3 +1,4 @@
+
 export class Trie {
     constructor(name, year) {
       this.root = {};

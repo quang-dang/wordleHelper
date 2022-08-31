@@ -1,6 +1,12 @@
 import {Trie} from './trie.js';
 import {words1, words2} from './dictionary.js';
 
+const colorConverter = {
+    "rgb(0, 128, 0)":"green",
+    "rgb(255, 255, 0)":"yellow",
+    "rgb(128, 128, 128)":"gray",
+};
+
 function validateInputText(evt) {
     var theEvent = evt || window.event;
   
@@ -33,25 +39,71 @@ function changeInputColor(guessId, inputId, colorId) {
             element.style.borderStyle = "none";
         }
     });
+}
+
+function generateGuesses() {
+    let fixedLetters = {};
+    let bannedLetters = {};
+    let loseLetters = {};
+    let requiredLetters = "";
+
     let trie = new Trie();
     words1.forEach((word) => trie.add(word));
     words2.forEach((word) => trie.add(word));
-    const t = trie.findAllWords({},{0:"w"},{},"w");
-    console.log(t);
+    console.log("here");
+
+    function getInputs(guessId) {
+        let answerChars = [];
+        let answerColors = [];
+        let validInput = true;
+        ['1','2','3','4','5'].forEach((id) => {
+            const inputId = "guess-".concat(guessId).concat("-input-").concat(id);
+            const inputElement = document.getElementById(inputId);
+            const inputColor = getComputedStyle(inputElement).backgroundColor;
+            const inputValue = inputElement.value;
+            if (!inputValue){
+                validInput = false;
+            }
+            answerChars.push(inputValue.toLowerCase());
+            answerColors.push(colorConverter[inputColor]);
+        });
+        if (!validInput) {
+            alert("please enter all 5 letters");
+            return;
+        }
+        requiredLetters = "";
+        for(let i = 0; i < 6; i++){
+            let char = answerChars[i];
+            let color = answerColors[i];
+            let index = i.toString();
+            if (color === "green"){
+                fixedLetters[index] = char;
+            } else if(color === "yellow"){
+                if (!(index in loseLetters)) {
+                    loseLetters[index] = {};
+                }
+                loseLetters[index][char] = true;
+            } else {
+                bannedLetters[char] = true; 
+            }
+            if (fixedLetters[index]) {
+                requiredLetters = requiredLetters.concat(fixedLetters[index]);
+            }
+        }
+
+        console.log(fixedLetters);
+        console.log(bannedLetters);
+        console.log(loseLetters);
+        console.log(requiredLetters);
+        let m = trie.findAllWords(bannedLetters, fixedLetters, loseLetters, requiredLetters);
+        console.log(m);
+        return;
+    }
+    return getInputs;
 }
 
-function getInputs(guessId) {
-    let ans = [];
-    ['1','2','3','4','5'].forEach((id) => {
-        const inputId = "guess-".concat(guessId).concat("-input-").concat(id);
-        const inputElement = document.getElementById(inputId);
-        const inputColor = inputElement.style.backgroundColor;
-        const inputValue = inputElement.value;
-        ans.push(inputValue);
-    })
-    console.log(ans);
-}
+var makeAGuess = generateGuesses();
 
 window.changeInputColor = changeInputColor;
 window.validateInputText = validateInputText;
-window.getInputs = getInputs;
+window.makeAGuess = makeAGuess;

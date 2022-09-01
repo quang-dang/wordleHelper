@@ -74,6 +74,65 @@
                     </div>   
                 </div> 
             </div>    
+            <div style="display: flex; flex-direction: row; align-self: center;" >
+                <div style="margin-right: 1em;">
+                    <h5 style="text-align: center;">2nd guess</h5>
+                </div>
+                <div style="display: flex; flex-direction: column;">
+                    <table id="guess-2-row">
+                        <tr style ="display: flex; flex-direction: row;">
+                            <td style="display: flex; flex-direction: column;">
+                                <input id="guess-2-input-1" type="text" maxlength="1" onkeypress='validateInputText(event)'>
+                                <div style="display: flex; flex-direction: row;">
+                                    <div id="guess-2-input-1-color-green" class="color-picker" style="background-color: green; border-style: solid; border-width: 0.1em; border-color: black;" 
+                                        onclick="changeInputColor('2','1','green')"></div>
+                                    <div id="guess-2-input-1-color-yellow" class="color-picker" style="background-color: yellow;" onclick="changeInputColor('2','1','yellow')"></div>
+                                    <div id="guess-2-input-1-color-gray" class="color-picker" style="background-color: gray;" onclick="changeInputColor('2','1','gray')"></div>
+                                </div>
+                            </td>
+                            <td style="display: flex; flex-direction: column;">
+                                <input id="guess-2-input-2" type="text" maxlength="1" onkeypress='validateInputText(event)'>
+                                <div style="display: flex; flex-direction: row;">
+                                    <div id="guess-2-input-2-color-green" class="color-picker" style="background-color: green; border-style: solid; border-width: 0.1em; border-color: black;" 
+                                        onclick="changeInputColor('2','2','green')"></div>
+                                    <div id="guess-2-input-2-color-yellow" class="color-picker" style="background-color: yellow;" onclick="changeInputColor('2','2','yellow')"></div>
+                                    <div id="guess-2-input-2-color-gray" class="color-picker" style="background-color: gray;" onclick="changeInputColor('2','2','gray')"></div>
+                                </div>
+                            </td>
+                            <td style="display: flex; flex-direction: column;">
+                                <input id="guess-2-input-3" type="text" maxlength="1" onkeypress='validateInputText(event)'>
+                                <div style="display: flex; flex-direction: row;">
+                                    <div id="guess-2-input-3-color-green" class="color-picker" style="background-color: green; border-style: solid; border-width: 0.1em; border-color: black;" 
+                                        onclick="changeInputColor('2','3','green')"></div>
+                                    <div id="guess-2-input-3-color-yellow" class="color-picker" style="background-color: yellow;" onclick="changeInputColor('2','3','yellow')"></div>
+                                    <div id="guess-2-input-3-color-gray" class="color-picker" style="background-color: gray;" onclick="changeInputColor('2','3','gray')"></div>
+                                </div>
+                            </td>
+                            <td style="display: flex; flex-direction: column;">
+                                <input id="guess-2-input-4" type="text" maxlength="1" onkeypress='validateInputText(event)'>
+                                <div style="display: flex; flex-direction: row;">
+                                    <div id="guess-2-input-4-color-green" class="color-picker" style="background-color: green; border-style: solid; border-width: 0.1em; border-color: black;" 
+                                        onclick="changeInputColor('2','4','green')"></div>
+                                    <div id="guess-2-input-4-color-yellow" class="color-picker" style="background-color: yellow;" onclick="changeInputColor('2','4','yellow')"></div>
+                                    <div id="guess-2-input-4-color-gray" class="color-picker" style="background-color: gray;" onclick="changeInputColor('2','4','gray')"></div>
+                                </div>
+                            </td>
+                            <td style="display: flex; flex-direction: column;">
+                                <input id="guess-2-input-5" type="text" maxlength="1" onkeypress='validateInputText(event)'>
+                                <div style="display: flex; flex-direction: row;">
+                                    <div id="guess-2-input-5-color-green" class="color-picker" style="background-color: green; border-style: solid; border-width: 0.1em; border-color: black;" 
+                                        onclick="changeInputColor('2','5','green')"></div>
+                                    <div id="guess-2-input-5-color-yellow" class="color-picker" style="background-color: yellow;" onclick="changeInputColor('2','5','yellow')"></div>
+                                    <div id="guess-2-input-5-color-gray" class="color-picker" style="background-color: gray;" onclick="changeInputColor('2','5','gray')"></div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <div style="align-self: center;">
+                        <button onclick="makeAGuess('2')">Guess</button>
+                    </div>   
+                </div> 
+            </div>    
         </div>
 
         <div id="suggestionSection"></div>

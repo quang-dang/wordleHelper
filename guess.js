@@ -45,17 +45,25 @@ function generateGuesses() {
     let fixedLetters = {};
     let bannedLetters = {};
     let loseLetters = {};
-    let requiredLetters = "";
 
     let trie = new Trie();
     words1.forEach((word) => trie.add(word));
     words2.forEach((word) => trie.add(word));
     console.log("here");
 
+    function appendSuggestedWords(suggestedWords) {
+        const section = document.getElementById('suggestionSection');
+        const p = document.createElement('p');
+        p.append(suggestedWords);
+        section.append(p);
+    }
+
     function getInputs(guessId) {
         let answerChars = [];
         let answerColors = [];
         let validInput = true;
+        let tempRequiredLetters = {};
+        
         ['1','2','3','4','5'].forEach((id) => {
             const inputId = "guess-".concat(guessId).concat("-input-").concat(id);
             const inputElement = document.getElementById(inputId);
@@ -71,34 +79,56 @@ function generateGuesses() {
             alert("please enter all 5 letters");
             return;
         }
-        requiredLetters = "";
+
         for(let i = 0; i < 6; i++){
             let char = answerChars[i];
             let color = answerColors[i];
             let index = i.toString();
             if (color === "green"){
                 fixedLetters[index] = char;
+                if (char in tempRequiredLetters){
+                    tempRequiredLetters[char]++;
+                } else {
+                    tempRequiredLetters[char] = 1;
+                }
             } else if(color === "yellow"){
                 if (!(index in loseLetters)) {
                     loseLetters[index] = {};
                 }
                 loseLetters[index][char] = true;
+                if (char in tempRequiredLetters){
+                    tempRequiredLetters[char]++;
+                } else {
+                    tempRequiredLetters[char] = 1;
+                }
             } else {
                 bannedLetters[char] = true; 
             }
-            if (fixedLetters[index]) {
-                requiredLetters = requiredLetters.concat(fixedLetters[index]);
+        }
+        let requiredLetters = {};
+        for (const [char, charCount] of Object.entries(tempRequiredLetters)) {
+            if (char in requiredLetters) {
+                requiredLetters[char] = Math.max(requiredLetters[char], charCount);
+            } else {
+                requiredLetters[char] = charCount;
             }
         }
+
+        let requiredLettersString = "";
+        for (const [char, charCount] of Object.entries(requiredLetters)) {
+            requiredLettersString += char.repeat(charCount);
+        }
+        
 
         console.log(fixedLetters);
         console.log(bannedLetters);
         console.log(loseLetters);
-        console.log(requiredLetters);
-        let m = trie.findAllWords(bannedLetters, fixedLetters, loseLetters, requiredLetters);
-        console.log(m);
+        console.log(requiredLettersString);
+        let m = trie.findAllWords(bannedLetters, fixedLetters, loseLetters, requiredLettersString);
+        appendSuggestedWords(m);
         return;
     }
+
     return getInputs;
 }
 

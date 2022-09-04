@@ -7,7 +7,7 @@ const colorConverter = {
     "rgb(128, 128, 128)":"gray",
 };
 
-function validateInputText(evt) {
+function validateInputText(evt, inputId) {
     var theEvent = evt || window.event;
   
     // Handle paste
@@ -22,7 +22,14 @@ function validateInputText(evt) {
     if( !regex.test(key) ) {
       theEvent.returnValue = false;
       if(theEvent.preventDefault) theEvent.preventDefault();
-    }  
+    } else {
+        const elementId = "guess-1".concat("-input-").concat(inputId);
+        document.getElementById(elementId).value = key;
+        if (inputId < 5){
+            const nextElementId = "guess-1".concat("-input-").concat(inputId+1);
+            document.getElementById(nextElementId).focus();
+        }
+    }
   }
 
 function changeInputColor(guessId, inputId, colorId) {
@@ -45,11 +52,22 @@ function generateGuesses() {
     let fixedLetters = {};
     let bannedLetters = {};
     let loseLetters = {};
+    let guesses = [];
 
     let trie = new Trie();
     words1.forEach((word) => trie.add(word));
     words2.forEach((word) => trie.add(word));
-    console.log("here");
+
+    function resetInputs(guessId) {
+        ['1','2','3','4','5'].forEach((id) => {
+            const inputId = "guess-".concat(guessId).concat("-input-").concat(id);
+            const inputElement = document.getElementById(inputId);
+            inputElement.style.backgroundColor="green";
+            inputElement.value = "";
+            changeInputColor(guessId, id, 'green');
+        });
+        return;
+    }
 
     function appendSuggestedWords(suggestedWords) {
         const section = document.getElementById('suggestionSection');
@@ -58,11 +76,21 @@ function generateGuesses() {
         section.append(p);
     }
 
-    function getInputs(guessId) {
+    function getInputs(guessId,reset) {
+        if (reset) {
+            fixedLetters = {};
+            bannedLetters = {};
+            loseLetters = {};
+            guesses = [];
+            return resetInputs(guessId);
+        }
+        console.log("reset:"+reset);
+        console.log("guessId:"+guessId);
         let answerChars = [];
         let answerColors = [];
         let validInput = true;
         let tempRequiredLetters = {};
+
         
         ['1','2','3','4','5'].forEach((id) => {
             const inputId = "guess-".concat(guessId).concat("-input-").concat(id);
@@ -80,8 +108,10 @@ function generateGuesses() {
             return;
         }
 
-        for(let i = 0; i < 6; i++){
+        let guess = "";
+        for(let i = 0; i < 5; i++){
             let char = answerChars[i];
+            guess += char;
             let color = answerColors[i];
             let index = i.toString();
             if (color === "green"){
@@ -118,17 +148,18 @@ function generateGuesses() {
         for (const [char, charCount] of Object.entries(requiredLetters)) {
             requiredLettersString += char.repeat(charCount);
         }
-        
+        guesses.push(guess);
+        console.log(guesses);
 
         console.log(fixedLetters);
         console.log(bannedLetters);
         console.log(loseLetters);
         console.log(requiredLettersString);
+        console.log("test 2");
         let m = trie.findAllWords(bannedLetters, fixedLetters, loseLetters, requiredLettersString);
         appendSuggestedWords(m);
         return;
     }
-
     return getInputs;
 }
 

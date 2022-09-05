@@ -30,6 +30,7 @@
     margin-right: auto;
     margin-left: auto;
     padding-top: 2em;
+    align-self: center;
   }
 
   #overlay {

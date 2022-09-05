@@ -73,9 +73,25 @@ function changeInputColor(guessId, inputId, colorId) {
 }
 
 function appendSuggestedWords(suggestedWords) {
+    console.log(suggestedWords);
     const section = document.getElementById('suggestionList');
+    section.innerHTML="";
     suggestedWords.forEach(word=>{
         let w = document.createElement('p');
+        w.style.marginLeft= "0.5em";
+        w.style.marginRight= "0.5em";
+        w.append(word);
+        section.append(w);
+    });
+}
+
+function appendGuesses(guesses){
+    const section = document.getElementById('guessesList');
+    section.innerHTML="";
+    guesses.forEach(word=>{
+        let w = document.createElement('p');
+        w.style.marginLeft= "0.5em";
+        w.style.marginRight= "0.5em";
         w.append(word);
         section.append(w);
     });
@@ -86,6 +102,8 @@ function generateGuesses() {
     let bannedLetters = {};
     let loseLetters = {};
     let guesses = [];
+    let requiredLetters = {};
+    let specificBannedLetters = {};
 
     let trie = new Trie();
     words1.forEach((word) => trie.add(word));
@@ -159,7 +177,7 @@ function generateGuesses() {
                 bannedLetters[char] = true; 
             }
         }
-        let requiredLetters = {};
+        
         for (const [char, charCount] of Object.entries(tempRequiredLetters)) {
             if (char in requiredLetters) {
                 requiredLetters[char] = Math.max(requiredLetters[char], charCount);
@@ -171,6 +189,9 @@ function generateGuesses() {
         let requiredLettersString = "";
         for (const [char, charCount] of Object.entries(requiredLetters)) {
             requiredLettersString += char.repeat(charCount);
+            if (char in bannedLetters){
+                delete bannedLetters[char];
+            }
         }
         guesses.push(guess);
         console.log(guesses);
@@ -182,6 +203,7 @@ function generateGuesses() {
         console.log("test 2");
         let m = trie.findAllWords(bannedLetters, fixedLetters, loseLetters, requiredLettersString);
         appendSuggestedWords(m);
+        appendGuesses(guesses);
         return;
     }
     return getInputs;

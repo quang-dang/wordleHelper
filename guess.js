@@ -103,7 +103,6 @@ function generateGuesses() {
     let loseLetters = {};
     let guesses = [];
     let requiredLetters = {};
-    let specificBannedLetters = {};
 
     let trie = new Trie();
     words1.forEach((word) => trie.add(word));
@@ -151,6 +150,7 @@ function generateGuesses() {
         }
 
         let guess = "";
+        let tempGrayLetters = {};
         for(let i = 0; i < 5; i++){
             let char = answerChars[i];
             guess += char;
@@ -174,7 +174,19 @@ function generateGuesses() {
                     tempRequiredLetters[char] = 1;
                 }
             } else {
+                tempGrayLetters[index] = char;
                 bannedLetters[char] = true; 
+            }
+        }
+
+        for (const [index, char] of Object.entries(tempGrayLetters)) {
+            for (let j = 0; j < 5; j++) {
+                if (j in loseLetters && char in loseLetters[j]){
+                    if (!(index in loseLetters)){
+                        loseLetters[index] = {};
+                    }
+                    loseLetters[index][char] = true;
+                }
             }
         }
         

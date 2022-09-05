@@ -19,18 +19,37 @@ function validateInputText(evt, inputId) {
         key = String.fromCharCode(key);
     }
     var regex = /[A-Za-z]/;
-    if( !regex.test(key) ) {
-      theEvent.returnValue = false;
-      if(theEvent.preventDefault) theEvent.preventDefault();
-    } else {
-        const elementId = "guess-1".concat("-input-").concat(inputId);
-        document.getElementById(elementId).value = key;
-        if (inputId < 5){
-            const nextElementId = "guess-1".concat("-input-").concat(inputId+1);
-            document.getElementById(nextElementId).focus();
+    theEvent.returnValue = false;
+    if(theEvent.preventDefault) theEvent.preventDefault();
+    if( regex.test(key) ) {
+        if (theEvent.keyCode !== 8) {
+            const elementId = "guess-1".concat("-input-").concat(inputId);
+            document.getElementById(elementId).value = key;
+            if (inputId < 5){
+                const nextElementId = "guess-1".concat("-input-").concat(inputId+1);
+                document.getElementById(nextElementId).focus();
+            }
         }
     }
-  }
+}
+
+function backspaceOverride(evt, inputId) {
+     var theEvent = evt || window.event;
+    // Handle key press
+    var key = theEvent.keyCode || theEvent.which;
+    key = String.fromCharCode(key);
+    const keyID = theEvent.keyCode;
+    const elementId = "guess-1".concat("-input-").concat(inputId);
+    const prevElementId = "guess-1".concat("-input-").concat(inputId-1);
+    if (keyID === 8) {
+        if (inputId >1){
+            theEvent.returnValue = false;
+            if(theEvent.preventDefault) theEvent.preventDefault();
+            document.getElementById(prevElementId).focus();
+            document.getElementById(elementId).value = "";
+        }
+    }
+}
 
 function changeInputColor(guessId, inputId, colorId) {
     const elementId = "guess-".concat(guessId).concat("-input-").concat(inputId);
@@ -70,10 +89,12 @@ function generateGuesses() {
     }
 
     function appendSuggestedWords(suggestedWords) {
-        const section = document.getElementById('suggestionSection');
-        const p = document.createElement('p');
-        p.append(suggestedWords);
-        section.append(p);
+        const section = document.getElementById('suggestionList');
+        suggestedWords.forEach(word=>{
+            let w = document.createElement('p');
+            w.append(word);
+            section.append(w);
+        });
     }
 
     function getInputs(guessId,reset) {
@@ -84,8 +105,6 @@ function generateGuesses() {
             guesses = [];
             return resetInputs(guessId);
         }
-        console.log("reset:"+reset);
-        console.log("guessId:"+guessId);
         let answerChars = [];
         let answerColors = [];
         let validInput = true;
@@ -168,3 +187,4 @@ var makeAGuess = generateGuesses();
 window.changeInputColor = changeInputColor;
 window.validateInputText = validateInputText;
 window.makeAGuess = makeAGuess;
+window.backspaceOverride = backspaceOverride;

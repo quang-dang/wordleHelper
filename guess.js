@@ -75,6 +75,8 @@ function changeInputColor(guessId, inputId, colorId) {
 function appendSuggestedWords(suggestedWords) {
     console.log(suggestedWords);
     const section = document.getElementById('suggestionList');
+    section.style.width="70%";
+    section.style.height="150px";
     section.innerHTML="";
     suggestedWords.forEach(word=>{
         let w = document.createElement('p');

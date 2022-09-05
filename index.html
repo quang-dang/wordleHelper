@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Wordle Guesses</title>
+        <title>Wordle Helper</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="style.css">
         <script type="module" src="guess.js"></script>
@@ -10,7 +10,7 @@
     <body>
         <div>
           <div>
-            <h2 style="text-align: center;">Enter your guess' results</h2>
+            <h2 style="text-align: center;">Enter your guess</h2>
           </div>
         </div>
 
@@ -67,7 +67,7 @@
                         </tr>
                     </table>
                     <div style="align-self: center;">
-                        <button onclick="makeAGuess('1', false)">Guess</button>
+                        <button onclick="makeAGuess('1', false)">suggest words that meet the criteria</button>
                     </div>   
                     <div style="align-self: center;">
                         <button onclick="makeAGuess('1',true)">reset</button>
@@ -78,9 +78,17 @@
 
         <div style="display: flex; flex-direction: column;">
             <div id="suggestionSection" style="display: flex; flex-direction: column;; align-self: center; width: 100%;">
-                <div id="guessesList" style="display: flex; flex-direction: row; flex-wrap: wrap">
+                <div style="display: flex; flex-direction: column;; align-self: center; width: 100%;">
+                    <div id="guessListTitle" style="display: flex; flex-direction: row; align-self: center;">
+                    </div>
+                    <div id="guessesList" style="display: flex; flex-direction: row; flex-wrap: wrap; align-self: center; background-color: black">
+                    </div>
                 </div>
-                <div id="suggestionList" style="display: flex; flex-direction: row; flex-wrap: wrap; background-color: aqua; overflow: scroll; align-self: center;">
+                <div style="display: flex; flex-direction: column;; align-self: center; width: 100%;">
+                    <div id="suggestionListTitle" style="display: flex; flex-direction: row; align-self: center;">
+                    </div>
+                    <div id="suggestionList" style="display: flex; flex-direction: row; flex-wrap: wrap; background-color: aqua; overflow: scroll; align-self: center;">
+                    </div>
                 </div>
             </div>
 

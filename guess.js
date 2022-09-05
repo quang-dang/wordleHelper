@@ -72,29 +72,71 @@ function changeInputColor(guessId, inputId, colorId) {
     });
 }
 
-function appendSuggestedWords(suggestedWords) {
-    console.log(suggestedWords);
+function resetSuggestedWords() {
+    const titleSection = document.getElementById('suggestionListTitle');
+    titleSection.innerHTML="";
     const section = document.getElementById('suggestionList');
-    section.style.width="70%";
-    section.style.height="150px";
+    section.style.height="0px";
+    section.innerHTML="";
+    return;
+}
+
+function appendSuggestedWords(suggestedWords) {
+    const titleSection = document.getElementById('suggestionListTitle');
+    titleSection.innerHTML="";
+    const title = document.createElement('p');
+    if (suggestedWords.length === 0){
+        title.innerHTML = "There are no words that matched your criteria";
+        title.style.color="red";
+        title.fontwei
+    } else {
+        title.innerHTML = "There are " + suggestedWords.length + " suggested word(s) that matched your criteria:";
+    }
+    titleSection.append(title);
+
+    const section = document.getElementById('suggestionList');
+    if (suggestedWords.length !== 0){
+        section.style.width="70%";
+        section.style.height="150px";
+    }
     section.innerHTML="";
     suggestedWords.forEach(word=>{
         let w = document.createElement('p');
         w.style.marginLeft= "0.5em";
         w.style.marginRight= "0.5em";
-        w.append(word);
+        w.append(word.toUpperCase());
         section.append(w);
     });
 }
 
-function appendGuesses(guesses){
+function resetGuesses(){
+    const titleSection = document.getElementById('guessListTitle');
+    titleSection.innerHTML="";
     const section = document.getElementById('guessesList');
     section.innerHTML="";
-    guesses.forEach(word=>{
+    return;
+}
+
+function appendGuesses(guesses){
+    const titleSection = document.getElementById('guessListTitle');
+    titleSection.innerHTML="";
+    const title = document.createElement('p');
+    title.innerHTML = "Your guesses:"
+    
+    titleSection.append(title);
+    const section = document.getElementById('guessesList');
+    section.innerHTML="";
+    guesses.forEach(guess=>{
         let w = document.createElement('p');
         w.style.marginLeft= "0.5em";
         w.style.marginRight= "0.5em";
-        w.append(word);
+        for (let i = 0; i < 5; i++){
+            let s = document.createElement('span');
+            s.style.color = guess['color'][i];
+            s.style.fontWeight = 'bold';
+            s.innerHTML=guess['word'][i].toUpperCase();
+            w.append(s)
+        }
         section.append(w);
     });
 }
@@ -118,6 +160,8 @@ function generateGuesses() {
             inputElement.value = "";
             changeInputColor(guessId, id, 'green');
         });
+        resetSuggestedWords();
+        resetGuesses();
         return;
     }
 
@@ -127,6 +171,7 @@ function generateGuesses() {
             bannedLetters = {};
             loseLetters = {};
             guesses = [];
+            requiredLetters = {};
             return resetInputs(guessId);
         }
         let answerChars = [];
@@ -151,13 +196,19 @@ function generateGuesses() {
             return;
         }
 
-        let guess = "";
+        let guess = {};
         let tempGrayLetters = {};
         for(let i = 0; i < 5; i++){
             let char = answerChars[i];
-            guess += char;
             let color = answerColors[i];
             let index = i.toString();
+            if (i == 0){
+                guess['word'] = char;
+                guess['color'] = [color];
+            } else {
+                guess['word'] += char;
+                guess['color'].push(color);
+            }
             if (color === "green"){
                 fixedLetters[index] = char;
                 if (char in tempRequiredLetters){
@@ -208,13 +259,6 @@ function generateGuesses() {
             }
         }
         guesses.push(guess);
-        console.log(guesses);
-
-        console.log(fixedLetters);
-        console.log(bannedLetters);
-        console.log(loseLetters);
-        console.log(requiredLettersString);
-        console.log("test 2");
         let m = trie.findAllWords(bannedLetters, fixedLetters, loseLetters, requiredLettersString);
         appendSuggestedWords(m);
         appendGuesses(guesses);

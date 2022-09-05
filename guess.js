@@ -9,7 +9,6 @@ const colorConverter = {
 
 function validateInputText(evt, inputId) {
     var theEvent = evt || window.event;
-  
     // Handle paste
     if (theEvent.type === 'paste') {
         key = event.clipboardData.getData('text/plain');
@@ -41,12 +40,18 @@ function backspaceOverride(evt, inputId) {
     const keyID = theEvent.keyCode;
     const elementId = "guess-1".concat("-input-").concat(inputId);
     const prevElementId = "guess-1".concat("-input-").concat(inputId-1);
+    const currElement = document.getElementById(elementId);
+    const prevElement = document.getElementById(prevElementId);
     if (keyID === 8) {
         if (inputId >1){
             theEvent.returnValue = false;
             if(theEvent.preventDefault) theEvent.preventDefault();
-            document.getElementById(prevElementId).focus();
-            document.getElementById(elementId).value = "";
+            if (currElement.value.length !== 0) {
+                document.getElementById(elementId).value = "";
+            } else {
+                document.getElementById(prevElementId).focus();
+            }
+            
         }
     }
 }
@@ -64,6 +69,15 @@ function changeInputColor(guessId, inputId, colorId) {
         } else {
             element.style.borderStyle = "none";
         }
+    });
+}
+
+function appendSuggestedWords(suggestedWords) {
+    const section = document.getElementById('suggestionList');
+    suggestedWords.forEach(word=>{
+        let w = document.createElement('p');
+        w.append(word);
+        section.append(w);
     });
 }
 
@@ -86,15 +100,6 @@ function generateGuesses() {
             changeInputColor(guessId, id, 'green');
         });
         return;
-    }
-
-    function appendSuggestedWords(suggestedWords) {
-        const section = document.getElementById('suggestionList');
-        suggestedWords.forEach(word=>{
-            let w = document.createElement('p');
-            w.append(word);
-            section.append(w);
-        });
     }
 
     function getInputs(guessId,reset) {
